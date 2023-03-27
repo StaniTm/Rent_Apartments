@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<section th:replace="~{fragments/navbar}"></section>
+<div class="container">
+    <h1 class="text-center text-dark">Admin Apartments Panel</h1>
+</div>
+<div class="container">
+    <table class="table table-bordered mt-2">
+        <thead class="table-success">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">CityName</th>
+            <th scope="col">OwnerId</th>
+            <th scope="col">Address</th>
+            <th scope="col">RoomCount</th>
+            <th scope="col">SizeSquareMeters</th>
+            <th scope="col">HaveOffers</th>
+            <th scope="col">Rented</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:if="${#lists.size(apartments) > 0}">
+            <tr th:each="apartment : ${apartments}">
+                <td th:text="${apartment.getId()}"></td>
+                <td th:text="${@utils.capitalizeWord(apartment.getCityName())}"></td>
+                <td th:text="${apartment.getOwner().getId()}">
+                    <select class="form-select" id="selectRooms" name="rooms">
+                        <option value="one">1</option>
+                        <option value="two">2</option>
+                        <option value="three">3</option>
+                        <option value="four">4</option>
+                    </select>
+                </td>
+                <td th:text="${apartment.getAddress()}"></td>
+                <td th:text="${apartment.getRoomCount()}"></td>
+                <td th:text="${apartment.getSize() + ' &#13217;'}"></td>
+                <td th:if="${apartment.isListed()}">Yes</td>
+                <td th:unless="${apartment.isListed()}">No</td>
+                <td th:if="${apartment.isRented()}">Yes</td>
+                <td th:unless="${apartment.isRented()}">No</td>
+                <td th:unless="${apartment.isRented() || apartment.isBooked()}"><a th:href="@{/offers/admin/remove/apartment/{apartmentId}(apartmentId=${apartment.getId()})}" class="btn btn-primary">Delete</a></td>
+                <td th:if="${apartment.isRented() || apartment.isBooked()}">
+                    <p>Apartment is either rented<br>
+                        or booked for a viewing!</p>
+                </td>
+            </tr>
+        </th:block>
+
+        </tbody>
+    </table>
+</div>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

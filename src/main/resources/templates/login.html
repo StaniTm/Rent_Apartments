@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<div class="container bg-image"
+     style="background-image: url('/images/loginRegisterBg.jpg');
+     width: 1295px;
+     height: 750px">
+    <h2 class="text-center" style="padding: 60px; font-size: xxx-large">Login</h2>
+    <form class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center"
+          style="width: fit-content"
+          th:method="POST"
+          th:action="@{/user/login}">
+        <div class="mb-3">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="username" class="h4">Username</label>
+            </div>
+            <input type="text" min="3" max="20"
+                   class="form-control"
+                   name="username"
+                   id="username"
+                   placeholder="username">
+            <div id="userHelp" class="form-text fw-bold">We'll never share your details with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="password" class="h4">Password</label>
+            </div>
+            <input type="password" min="4" max="25"
+                   class="form-control"
+                   id="password"
+                   name="password"
+                   placeholder="password">
+        </div>
+        <p class="errors alert alert-danger" th:if="${bad_credentials}">
+            Invalid username or password!
+        </p>
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </form>
+    <div class="container-md mt-1">
+        <p class="text-center">Still don`t have an Acc?<a href="/user/register" class="link-primary"><b> Sign up!</b></a></p>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<section th:replace="~{fragments/navbar}"></section>
+<div class="container">
+    <h1 class="text-center text-dark">Admin Users Panel</h1>
+</div>
+<div class="container">
+    <table class="table table-bordered mt-2">
+        <thead class="table-success">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">PhoneNumber</th>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">Role</th>
+            <th scope="col">ModifiedOn</th>
+            <th scope="col">CreatedOn</th>
+            <th scope="col">Bookings</th>
+            <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:if="${#lists.size(users) > 0}">
+            <tr th:each="user : ${users}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getUsername()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:unless="${user.getPhoneNumber() == null}" th:text="${user.getPhoneNumber()}"></td>
+                <td th:if="${user.getPhoneNumber() == null}"><p>not provided</p></td>
+                <td th:text="${user.getFirstName()}"></td>
+                <td th:text="${user.getLastName()}">Yes</td>
+                <td><p class="mb-0"
+                           th:each="role : ${user.getRole()}" th:value="${role.getRole()}"
+                           th:text="${role.getRole()}"></p>
+                        <select th:if="${#lists.size(user.getRole()) == 1}" class="form-select mt-0" id="role"
+                                name="role">
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                        <a th:if="${#lists.size(user.getRole()) == 1}"
+                                class="btn btn-primary" th:href="@{/admin/change/user/role/{userId}(userId=${user.getId()})}">Add Role</a>
+                </td>
+                <td th:unless="${user.getModifiedOn() == null}" th:text="${user.getModifiedOn()}"></td>
+                <td th:if="${user.getModifiedOn() == null}">not modified yet</td>
+                <td th:text="${user.getCreatedOn()}"></td>
+                <td th:if="${#lists.size(user.getBookings()) > 0}">some</td>
+                <td th:unless="${#lists.size(user.getBookings()) > 0}">none</td>
+                <td><a class="btn btn-primary" th:href="@{/admin/delete/user/{userId}(userId=${user.getId()})}">Delete</a></td>
+            </tr>
+        </th:block>
+
+        </tbody>
+    </table>
+</div>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

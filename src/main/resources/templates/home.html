@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--head-->
+<head th:replace="~{fragments/head}"></head>
+<body>
+<!--navigation-->
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<!--Carousel picture slide-->
+<section th:replace="~{fragments/carousel}">
+</section>
+
+<!--OfferEntity Cards-->
+<section>
+<!--OfferEntity Headers-->
+    <div class="container-md">
+        <div class="header pt-3" style="background-color: steelblue">
+            <div class="row">
+                <div class="large-12 columns">
+                    <h1 class="section-title-small text-center" style="color:black;">
+                        Amazing Value for Money
+                    </h1>
+                </div>
+            </div>
+            <div class="row pb-4">
+                <h4 class="text-center" style="color:black">
+                    Find you`re future Home! You can start by choosing how big apartment you are looking for.
+                </h4>
+            </div>
+        </div>
+
+        <div th:if="${#lists.size(latestOffers) == 0}" class="container">
+            <h1 class="text-center">Application doesn't have any apartment data initialized!</h1>
+        </div>
+<!--Deals-->
+        <div class="container" th:unless="${#lists.size(latestOffers) == 0}">
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-2" th:if="${#lists.size(latestOffers) > 0}">
+                        <div class="card text-bg-dark">
+                            <img th:src="@{${'/images/' + latestOffers.get(0).getApartment().getImages().get(0).getName()}}"
+                                 class="card-img"
+                                 style="height: 300px"
+                                 alt="sunnyBeach">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title" th:text="${'City: ' + @utils.capitalizeWord(latestOffers.get(0).getApartment().getCityName())}"></h5>
+                                <p class="card-text" th:text="${'Address: ' + latestOffers.get(0).getApartment().getAddress()}"></p>
+                                <p class="card-text">Price:<small th:text="${' ' + #numbers.formatDecimal((latestOffers.get(0).getPrice()), 3, 2) + '$'}"></small></p>
+                                <a class="btn-primary btn d-inline" th:href="@{/offers/selected/{offerId}(offerId=${latestOffers.get(0).getId()})}">Show Apartment</a>
+                            </div>
+
+                        </div>
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-2" th:if="${#lists.size(latestOffers) > 1}">
+                        <div class="card text-bg-dark">
+                            <img th:src="@{${'/images/' + latestOffers.get(1).getApartment().getImages().get(0).getName()}}"
+                                 class="card-img"
+                                 style="height: 300px"
+                                 alt="sunnyBeach">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title" th:text="${'City: ' + @utils.capitalizeWord(latestOffers.get(1).getApartment().getCityName())}"></h5>
+                                <p class="card-text" th:text="${'Address: ' + latestOffers.get(1).getApartment().getAddress()}"></p>
+                                <p class="card-text">Price:<small th:text="${' ' + #numbers.formatDecimal((latestOffers.get(1).getPrice()), 3, 2) + '$'}"></small></p>
+                                <a class="btn-primary btn d-inline" th:href="@{/offers/selected/{offerId}(offerId=${latestOffers.get(1).getId()})}">Show Apartment</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-2" th:if="${#lists.size(latestOffers) > 2}">
+                        <div class="card text-bg-dark">
+                            <img th:src="@{${'/images/' + latestOffers.get(2).getApartment().getImages().get(0).getName()}}"
+                                 class="card-img"
+                                 style="height: 300px"
+                                 alt="sunnyBeach">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title" th:text="${'City: ' + @utils.capitalizeWord(latestOffers.get(2).getApartment().getCityName())}"></h5>
+                                <p class="card-text" th:text="${'Address: ' + latestOffers.get(2).getApartment().getAddress()}"></p>
+                                <p class="card-text">Price:<small th:text="${' ' + #numbers.formatDecimal((latestOffers.get(2).getPrice()), 3, 2) + '$'}"></small></p>
+                                <a class="btn-primary btn d-inline" th:href="@{/offers/selected/{offerId}(offerId=${latestOffers.get(2).getId()})}">Show Apartment</a>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-2" th:if="${#lists.size(latestOffers) > 3}">
+                        <div class="card text-bg-dark">
+                            <img th:src="@{${'/images/' + latestOffers.get(3).getApartment().getImages().get(0).getName()}}"
+                                 class="card-img"
+                                 style="height: 300px"
+                                 alt="sunnyBeach">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title" th:text="${'City: ' + @utils.capitalizeWord(latestOffers.get(3).getApartment().getCityName())}"></h5>
+                                <p class="card-text" th:text="${'Address: ' + latestOffers.get(3).getApartment().getAddress()}"></p>
+                                <p class="card-text">Price:<small th:text="${' ' + #numbers.formatDecimal((latestOffers.get(3).getPrice()), 3, 2) + '$'}"></small></p>
+                                <a class="btn-primary btn d-inline" th:href="@{/offers/selected/{offerId}(offerId=${latestOffers.get(3).getId()})}">Show Apartment</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

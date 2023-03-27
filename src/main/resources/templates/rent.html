@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div class="container"> <nav th:replace="~{fragments/navbar}"></nav></div>
+
+<div class="container bg-image text-center justify-content-center"
+     style="background-image: url('/images/apartment8.webp'); width: 1295px; height: 700px">
+    <h1 class="header pt-5">Confirm your personal details.</h1>
+    <h5>We will use the info to prepare a contract for you!</h5>
+    <form th:action="@{/rent/{offerId}(offerId=${offer.getId()})}"
+          th:method="POST"
+          th:object="${rentForm}"
+          style="width: fit-content"
+          class="main-form mx-auto col-md-8 flex-column d-flex border-dark-subtle bg-transparent mt-4">
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="datepicker" class="h4">Move in date:</label>
+            </div>
+            <input type="text" class="form-control" id="datepicker" name="moveInDate">
+            <p th:if="${#fields.hasErrors('moveInDate')}" class="text-danger">Date you want to move in is required.</p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="email" class="h4">Email</label>
+            </div>
+            <input type="email" th:value="${user.getEmail()}" name="email" id="email" class="form-control">
+            <p th:if="${#fields.hasErrors('email')}"
+               class="text-danger">
+                Email is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="phoneNumber" class="h4">Phone Number</label>
+            </div>
+            <input type="text" th:value="${user.getPhoneNumber()}" name="phoneNumber" id="phoneNumber" class="form-control">
+            <p th:if="${#fields.hasErrors('phoneNumber')}"
+               class="text-danger">
+                Phone Number is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder text-dark d-flex justify-content-center">
+                <label for="firstName" class="h4">First Name</label>
+            </div>
+            <input type="text" th:value="${user.getFirstName()}" class="form-control" name="firstName" id="firstName">
+            <p th:if="${#fields.hasErrors('firstName')}"
+               class="text-danger">
+                First Name is required.
+            </p>
+        </div>
+        <div class="mb-4">
+            <div class="label-holder text-dark d-flex justify-content-center">
+                <label for="lastName" class="h4">Last Name</label>
+            </div>
+            <input type="text" th:value="${user.getLastName()}" class="form-control" name="lastName" id="lastName">
+            <p th:if="${user.getLastName().isBlank()}"></p>
+            <p th:if="${#fields.hasErrors('lastName')}"
+               class="text-danger">
+                Last Name is required.
+            </p>
+        </div>
+        <button type="submit" class="btn btn-primary">Rent</button>
+    </form>
+</div>
+
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

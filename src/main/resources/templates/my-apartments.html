@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--head-->
+<head th:replace="~{fragments/head}"></head>
+<body>
+<!--navigation-->
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<!--Carousel picture slide-->
+<section th:replace="~{fragments/carousel}">
+</section>
+
+<section>
+    <div class="container">
+        <div class="header pt-3" style="background-color: steelblue">
+            <div class="row">
+                <div class="large-12 columns">
+                    <h1 sec:authentication="name" class="section-title-small text-center" style="color:black;"></h1>
+                </div>
+            </div>
+            <div class="row pb-4">
+                <h4 class="text-center" style="color:black" th:unless="${#lists.size(offers) == 0}">
+                    Manage your apartments from here.
+                </h4>
+                <h4 class="text-center" th:if="${#lists.size(offers) == 0}">You don't have any Apartments yet!
+                    <b><a class="text-dark" href="/offers/add-offer">Add your first Apartment</a></b></h4>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container-md">
+        <!--OfferModels Cards-->
+        <div class="row">
+            <div th:each="offer : ${offers}"
+                 class="card bg-dark-subtle mx-3 mb-3" style="width: 18rem;">
+                <img th:src="@{${'/images/' + offer.getApartment().getImages().get(0).getName()}}"
+                     class="card-img-top mt-2"
+                     th:alt="${offer.getApartment().getImages().get(0).getName()}"
+                     style="height: 180px">
+                <div class="card-body">
+                    <h5 class="card-title border-2">Description</h5>
+                    <p class="card-text" th:text="${offer.getApartment().getDescription()}">Hotel Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>City:</h5><h6 class="mx-2" th:text=" ${@utils.capitalizeWord(offer.getApartment().getCityName())}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5 class="mb-3">Address: </h5><h6 class="mb-3 mx-2" th:text="${offer.getApartment().getAddress()}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Rooms:</h5><h6 class="mx-2" th:text="${offer.getApartment().getRoomCount()}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Size:</h5><h6 class="mx-2" th:text="${offer.getApartment().getSize() + ' &#13217'}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Rent:</h5><h6 class="mx-2" th:text="${offer.getPrice() + ' BGN per month!'}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Contract:</h5><h6 class="mx-2" th:text="${offer.getMinLength()}"></h6>
+                    </li>
+
+                </ul>
+                <div class="card-body">
+                    <a class="btn-primary btn d-inline" th:href="@{/offers/selected/{offerId}(offerId=${offer.getId()})}">Show Apartment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

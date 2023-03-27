@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<div class="container bg-image"
+     style="background-image: url('https://img.etimg.com/photo/95779610.cms');
+     width: 1295px;
+     height: 1000px">
+    <h4 class="text-center text-white" style="padding: 40px; font-size: xxx-large">Add Offer</h4>
+    <form class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center border-light"
+          style="width: fit-content"
+          th:method="POST"
+          th:action="@{/offers/add-offer}"
+          th:object="${apartmentOfferForm}"
+          enctype="multipart/form-data">
+        <div class="mb-2">
+            <div class="label-holder d-flex text-white justify-content-center">
+                <label for="address" class="h4">Apartment Address</label>
+            </div>
+            <input type="text" class="form-control" name="address" id="address" aria-describedby="address">
+            <p th:if="${#fields.hasErrors('address')}"
+               class="text-danger">
+                Apartment address is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-white justify-content-center">
+                <label for="cityName" class="h4">City Name</label>
+            </div>
+            <select class="form-select" aria-label="selectStars" id="cityName" name="cityName">
+                <option th:each="city : ${cityList}"
+                        th:value="${@utils.capitalizeWord(city.getName())}"
+                        th:text="${@utils.capitalizeWord(city.getName())}"></option>
+                <option value="sunny&beach">Sunny Beach</option>
+                <option value="plovdiv">Plovdiv</option>
+            </select>
+            <p th:if="${#fields.hasErrors('cityName')}"
+               class="text-danger">
+                City Name is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-white justify-content-center">
+                <label for="roomCount" class="h4">Rooms</label>
+            </div>
+            <select class="form-select" aria-label="roomCount" id="roomCount" name="roomCount">
+                <option value="2">2 rooms</option>
+                <option value="3">3 rooms</option>
+                <option value="4">4 rooms</option>
+                <option value="5">5 rooms</option>
+            </select>
+            <p th:if="${#fields.hasErrors('roomCount')}"
+               class="text-danger">
+                Number of rooms is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-white justify-content-center">
+                <label for="description" class="h4">Description</label>
+            </div>
+            <textarea type="text" name="description" id="description" class="form-control"></textarea>
+            <p th:if="${#fields.hasErrors('description')}"
+               class="text-danger">
+                Description is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-white justify-content-center">
+                <label for="price" class="h4">Price per Month</label>
+            </div>
+            <input type="number" name="price" id="price" class="form-control">
+            <p th:if="${#fields.hasErrors('price')}"
+               class="text-danger">
+                Price per month is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-white justify-content-center">
+                <label for="size" class="h4">Size in Square meter`s</label>
+            </div>
+            <input type="text" name="size" id="size" class="form-control">
+            <p th:if="${#fields.hasErrors('price')}"
+               class="text-danger">
+                Price per month is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="text-dark label-holder text-white d-flex justify-content-center">
+                <label for="minLength" class="h4">Min contract length</label>
+            </div>
+            <select class="form-select" aria-label="minLength" id="minLength" name="minLength">
+                <option value="one">1 year</option>
+                <option value="two">2 years</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label class="h4 mb-2">Picture</label>
+            </div>
+            <input type="file" class="form-control" name="picture" accept="image/png, image/jpeg"/>
+        </div>
+        <button type="submit" class="btn btn-dark mt-2">Add</button>
+    </form>
+</div>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

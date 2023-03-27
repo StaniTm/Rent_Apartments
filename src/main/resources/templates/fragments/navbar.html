@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="navbar"
+     class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Rent Apartment</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navbar"
+                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/offers/all" class="nav-link">All Apartments</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">By
+                        City</a>
+                    <ul class="dropdown-menu bg-dark-subtle">
+                        <li th:each="city : ${cityList}" class="dropdown-item">
+                            <a class="text-dark nav-link"
+                               th:href="@{/offers/{cityName}(cityName=${@utils.capitalizeWord(city.getName())})}"
+                               th:text="${@utils.capitalizeWord(city.getName())}"></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav mb-2 mb-sm-0">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="/user/login">Login</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="/user/register">Register</a>
+                </li>
+
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Apartments</a>
+                        <ul class="dropdown-menu bg-dark-subtle">
+                            <li class="nav-item">
+                                <a href="/offers/user/apartments" class="nav-link text-dark">My Apartments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/offers/add-offer">Add Apartment</a>
+                            </li>
+                        </ul>
+                    </li>
+                </th:block>
+                <div class="nav-item mb-2" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/user/logout}"
+                          th:method="POST">
+                        <input class="btn btn-link nav-link" type="submit" value="Logout">
+                    </form>
+                </div>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

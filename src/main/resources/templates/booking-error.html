@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<div class="container-sm bg-image"
+     style="background-image: url('/images/booking.webp')">
+    <h4 class="text-center text-dark" style="padding: 40px; font-size: xxx-large">Booking Info</h4>
+    <form th:action="@{/booking/{offerId}(offerId=${offer.getId()})}"
+          th:method="POST"
+          th:object="${bookingAvailabilityForm}"
+          style="width: fit-content"
+          class="main-form mx-auto col-md-8 flex-column d-flex border-dark-subtle bg-primary-subtle">
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="datepicker" class="h4">Date:</label>
+            </div>
+            <input type="text" class="form-control" id="datepicker" name="viewDate">
+            <p th:if="${#fields.hasErrors('viewDate')}" class="text-danger">Apartment address is required.</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Book</button>
+    </form>
+    <div class="col-6 col-sm-4 mx-auto justify-content-center border-dark-subtle bg-primary-subtle mt-5">
+        <h3 class="text-danger">The date you choose is booked. Please try another date!</h3>
+        <h4>Choose a convenient day to schedule a viewing!</h4>
+        <p>Please note that it`s possible the day to be already booked.</p>
+    </div>
+</div>
+<div th:replace="~{fragments/footer}"></div>
+
+</body>
+</html>

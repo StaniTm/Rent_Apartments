@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div class="container"><nav th:replace="~{fragments/navbar}"></nav></div>
+
+<div class="container">
+    <h1 class="header text-center">Apartment</h1>
+    <table class="table-responsive">
+        <tbody>
+        <tr>
+
+            <td class="col-6 col-md-4 mb-4" style="float: left; width: 400px">
+                <img th:src="@{${'/images/' + offer.getApartment().getImages().get(0).getName()}}"
+                     class="img-fluid rounded" style="height: 400px;"
+                     th:alt="${offer.getApartment().getImages().get(0).getName()}">
+            </td>
+            <td class="mx-0">
+                <img style="width: 250px" src="/images/apartment1.avif" class="img-thumbnail" alt="apartment.avif">
+
+                <img style="width: 250px" src="/images/apartment2.avif" class="img-thumbnail" alt="apartment.avif">
+
+                <img style="width: 250px" src="/images/apartment3.avif" class="img-thumbnail" alt="apartment.avif">
+
+                <img style="width: 250px" src="/images/apartment4.avif" class="img-thumbnail" alt="apartment.avif">
+
+                <img style="width: 250px" src="/images/apartment5.avif" class="img-thumbnail" alt="apartment.avif">
+                <th:block th:unless="${principalUsername.equals(ownerUsername)}">
+                    <a th:href="@{/booking/{offerId}(offerId=${offer.getId()})}" class="btn-primary btn ms-5 mt-lg-5">Book a Viewing</a>
+                    <a th:href="@{/rent/{offerId}(offerId=${offer.getId()})}" class="btn-primary btn mt-lg-5">Rent</a>
+                </th:block>
+                <th:block th:if="${principalUsername.equals(ownerUsername)}">
+                    <p th:if="${offer.getApartment().isRented() || offer.getApartment().isBooked()}">Cant be removed. Apartment is either rented
+                        or booked for a viewing! </p>
+                    <a th:unless="${offer.getApartment().isRented() || offer.getApartment().isBooked()}" th:href="@{/offers/remove/{offerId}(offerId=${offer.getId()})}" class="btn btn-primary ms-lg-5 mt-lg-5">Remove</a>
+                </th:block>
+            </td>
+            <td style="float: top;">
+                <div class="bg-dark-subtle"
+                     style="width:350px; display:inline-block; float:right;">
+                    <strong th:text="${'Size: ' + offer.getApartment().getRoomCount + ' room apartment'}"
+                            style="font-size:18px;color:#333;"></strong>
+                    <div class="clearfix"></div>
+                    <ul class="dilarData">
+                        <li><h5>City:&nbsp;</h5><h6
+                                th:text="${@utils.capitalizeWord(offer.getApartment().getCityName())}"></h6></li>
+                        <li><h5>Address:&nbsp;</h5><h6 th:text="${offer.getApartment.getAddress()}"></h6></li>
+                        <li><h5>Apartment size:&nbsp;</h5><h6
+                                th:text="${offer.getApartment().getSize() + ' &#13217'}"></h6></li>
+                        <li><h5>Price:&nbsp;</h5><h6 th:text="${'$' + offer.getPrice()}"></h6></li>
+                        <li><h5>Description:&nbsp;</h5>
+                            <p th:text="${offer.getApartment().getDescription()}"></p></li>
+                    </ul>
+                    <div class="clearfix" style="margin-bottom:11px;"></div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="/fragments/footer"></div>
+<style>
+    h6, h5 {
+        display: inline-block
+    }
+</style>
+
+</body>
+</html>

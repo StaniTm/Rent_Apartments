@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--head-->
+<head th:replace="~{fragments/head}"></head>
+<body>
+<!--navigation-->
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<!--Carousel picture slide-->
+<section th:replace="~{fragments/carousel}">
+</section>
+
+<section>
+    <div class="container">
+        <div class="header pt-3" style="background-color: steelblue">
+            <div class="row">
+                <div class="large-12 columns">
+                    <h1  class="section-title-small text-center" style="color:black;">All Apartments</h1>
+                </div>
+            </div>
+            <div class="row pb-4">
+                <h4 class="text-center" style="color:black">
+                    Find your future home!
+                </h4>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div th:if="${#lists.size(offers) == 0}" class="container">
+        <h1 class="text-center">Application doesn't have any apartment data initialized!</h1>
+    </div>
+    <div class="row align-content-md-center mb-3 bg-body-emphasis">
+        <div class="row mb-3 mt-3 align-content-md-center w-100 btn-">
+            <div class="col-2 col-sm text-center button-holder">
+                <a th:href="@{/offers/all}" class="btn btn-info" type="button" >All</a>
+            </div>
+            <div class="col-2 col-sm text-center button-holder">
+                <a th:href="@{/offers/all/room/size/{size}(size=2)}" class="btn btn-info" type="button" >2 rooms</a>
+            </div>
+            <div class="col-3 col-sm text-center button-holder">
+                <a th:href="@{/offers/all/room/size/{size}(size=3)}" class="btn btn-info" type="button">3 rooms</a>
+            </div>
+            <div class="col-1 col-sm text-center button-holder">
+                <a th:href="@{/offers/all/room/size/{size}(size=4)}" class="btn btn-info" type="button">4 rooms</a>
+            </div>
+            <div class="col-4 col-sm text-center button-holder">
+                <a th:href="@{/offers/all/room/size/{size}(size=5)}" class="btn btn-info" type="button">5 rooms</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-md">
+        <!--OfferModels Cards-->
+        <div class="row">
+            <div th:each="offer : ${offers}"
+                 class="card bg-dark-subtle mx-3 mb-3" style="width: 18rem;">
+                <img th:src="@{${'/images/' + offer.getApartment().getImages().get(0).getName()}}"
+                     class="card-img-top mt-2"
+                     th:alt="${offer.getApartment().getImages().get(0).getName()}"
+                     style="height: 180px">
+                <div class="card-body">
+                    <h5 class="card-title border-2">Description</h5>
+                    <p class="card-text" th:text="${offer.getApartment().getDescription()}">Hotel Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>City:</h5><h6 class="mx-2" th:text=" ${@utils.capitalizeWord(offer.getApartment().getCityName())}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5 class="mb-3">Address: </h5><h6 class="mb-3 mx-2" th:text="${offer.getApartment().getAddress()}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Rooms:</h5><h6 class="mx-2" th:text="${offer.getApartment().getRoomCount()}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Size:</h5><h6 class="mx-2" th:text="${offer.getApartment().getSize() + ' &#13217'}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Rent:</h5><h6 class="mx-2" th:text="${offer.getPrice() + ' BGN per month!'}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Contract:</h5><h6 class="mx-2" th:text="${offer.getMinLength()}"></h6>
+                    </li>
+
+                </ul>
+                <div class="card-body">
+                    <a class="btn-primary btn d-inline" th:href="@{/offers/selected/{offerId}(offerId=${offer.getId()})}">Show Apartment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

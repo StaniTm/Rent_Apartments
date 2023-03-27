@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div class="container">
+        <nav th:replace="~{fragments/navbar}"></nav>
+
+</div>
+<div class="bg-image container-md"
+     style="background-image: url('/images/index.avif');
+            height: 720px;
+            width: 1295px">
+    <div class="container text-center">
+        <header class="align-middle">
+            <h1 style="font-size: xxx-large; color: white; padding: 50px">Welcome to Rent Apartments</h1>
+        </header>
+    </div>
+</div>
+<div class="container pt-3 mt-2 border-dark">
+    <div class="row">
+        <div>
+            <div>
+                <div class="main_title text-center">
+                    <h2>Looking for a new place which feels like Home?<b> Rent Apartment!</b></h2>
+                    <h4>Your trusted accommodation experts are here to Help!</h4>
+                </div>
+
+            </div>
+            <div class="text-center">
+                <p>We are a small company but with big knowledge in providing the best accommodation`s possible for our Clients!</p>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="~{/fragments/footer}"></div>
+</body>
+</html> 

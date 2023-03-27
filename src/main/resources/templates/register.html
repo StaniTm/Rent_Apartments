@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<div class="container bg-image"
+     style="background-image: url('/images/loginRegisterBg.jpg');
+     width: 1295px;
+     height: 1000px">
+    <h4 class="text-center text-dark" style="padding: 40px; font-size: xxx-large">Register</h4>
+    <form class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center border-light"
+          style="width: fit-content"
+          th:method="POST"
+          th:action="@{/user/register}"
+          th:object="${userRegisterFormModel}">
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="username" class="h4">Username</label>
+            </div>
+            <input type="text" class="form-control" name="username" id="username" aria-describedby="username">
+            <p th:if="${#fields.hasErrors('username')}"
+               class="text-danger">
+                Username is required.
+            </p>
+            <p th:if="${takenUsername}" class="text-danger">
+                Username already exists!
+            </p>
+            <div th:unless="${#fields.hasErrors('username')}"
+                 id="userHelp" class="form-text fw-bold">We'll never share your details with anyone else.
+            </div>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="password" class="h4">Password</label>
+            </div>
+            <input type="password" class="form-control" id="password" name="password">
+            <p th:if="${#fields.hasErrors('password')}"
+               class="text-danger">
+                Password is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="confirmPassword" class="h4">ConfirmPassword</label>
+            </div>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+            <p class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}">Password miss match</p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="email" class="h4">Email</label>
+            </div>
+            <input type="email" name="email" id="email" class="form-control">
+            <p th:if="${#fields.hasErrors('email')}"
+               class="text-danger">
+                Email is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder d-flex text-dark justify-content-center">
+                <label for="phoneNumber" class="h4">Phone Number</label>
+            </div>
+            <input type="phoneNumber" name="phoneNumber" id="phoneNumber" class="form-control">
+            <p th:if="${#fields.hasErrors('phoneNumber')}"
+               class="text-danger">
+                Phone Number is required.
+            </p>
+        </div>
+        <div class="mb-2">
+            <div class="text-dark label-holder d-flex justify-content-center">
+                <label for="selectRole" class="h4 mb-2">Role</label>
+            </div>
+            <select class="form-select" aria-label="selectRole" id="selectRole" name="role">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <div class="label-holder text-dark d-flex justify-content-center">
+                <label for="firstName" class="h4">First Name</label>
+            </div>
+            <input type="text" placeholder="optional" class="form-control fw-light" name="firstName" id="firstName">
+        </div>
+        <div class="mb-2">
+            <div class="label-holder text-dark d-flex justify-content-center">
+                <label for="lastName" class="h4">Last Name</label>
+            </div>
+            <input type="text" placeholder="optional" class="form-control fw-light" name="lastName" id="lastName">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

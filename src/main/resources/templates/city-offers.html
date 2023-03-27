@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<style>
+    /* Initially, hide the extra text that
+        can be revealed with the button */
+    #moreText {
+
+        /* Display nothing for the element */
+        display: none;
+    }
+</style>
+<body>
+<!--Navbar-->
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<!--Carousel-->
+<section th:replace="~{fragments/carousel}"></section>
+<!--City Info-->
+<section>
+    <div class="container-md text-center w-50">
+        <h1 class="header mt-3 mb-3 font-monospace" style="color:#666666;" th:text="${city.getName()}"></h1>
+        <div class="section-sub-title">
+            <h4 class="f-18 gray-font-4"></h4>
+        </div>
+        <div style="font-family: Arial">
+            <p4>
+                <th:block
+                        th:text="${city.getDescription().substring(0, city.getDotIndex())}"></th:block>
+                <span id="points">...</span>
+
+                <!-- Define the text that would be
+                        hidden by default and only shown
+                        when clicked on the button -->
+                <span id="moreText">
+            <th:block th:text="${city.getDescription().substring(city.getDotIndex())}"></th:block></span>
+            </p4>
+        </div>
+
+        <!-- Trigger toggleText() when the
+                button is clicked -->
+        <button class="btn btn-primary" onclick="toggleText()" id="textButton">
+            Show More
+        </button>
+    </div>
+</section>
+
+<!--Deals Section-->
+<section>
+    <div class="header container-md align-content-md-center mt-4 mb-4" style="background-color: steelblue">
+        <br>
+        <h1 class="text-center text-white" th:text="${city.getName()} + ' '+  Apartments"></h1>
+        <h3 class="text-center text-white"
+            th:text="'Holidays to ' + ${city.getName()} + '. Rent today and save up to $100!'"></h3>
+        <br>
+    </div>
+<!--    //room count nav-->
+    <div class="row align-content-md-center mb-3 bg-body-emphasis">
+        <div class="row mb-3 mt-3 align-content-md-center w-100 btn-">
+            <div class="col-2 col-sm text-center button-holder">
+                <a th:href="@{/offers/{cityName}(cityName=${cityUrl})}" class="btn btn-info" type="button" >All</a>
+            </div>
+            <div class="col-2 col-sm text-center button-holder">
+                <a th:href="@{/offers/{cityName}/room/size/{size}(cityName=${cityUrl}, size=2)}" class="btn btn-info" type="button" >2 rooms</a>
+            </div>
+            <div class="col-3 col-sm text-center button-holder">
+                <a th:href="@{/offers/{cityName}/room/size/{size}(cityName=${cityUrl}, size=3)}" class="btn btn-info" type="button">3 rooms</a>
+            </div>
+            <div class="col-1 col-sm text-center button-holder">
+                <a th:href="@{/offers/{cityName}/room/size/{size}(cityName=${cityUrl}, size=4)}" class="btn btn-info" type="button">4 rooms</a>
+            </div>
+            <div class="col-4 col-sm text-center button-holder">
+                <a th:href="@{/offers/{cityName}/room/size/{size}(cityName=${cityUrl}, size=5)}" class="btn btn-info" type="button">5 rooms</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-md">
+        <!--OfferModels Cards-->
+        <div class="row">
+            <div th:each="offer : ${offers}"
+                 class="card bg-dark-subtle mx-3 mb-3" style="width: 18rem;">
+                <img th:src="@{${'/images/' + offer.getApartment().getImages().get(0).getName()}}"
+                     class="card-img-top mt-2"
+                     th:alt="${offer.getApartment().getImages().get(0).getName()}"
+                     style="height: 180px">
+                <div class="card-body">
+                    <h5 class="card-title border-2">Description</h5>
+                    <p class="card-text" th:text="${offer.getApartment().getDescription()}">Hotel Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>City:</h5><h6 class="mx-2" th:text=" ${@utils.capitalizeWord(offer.getApartment().getCityName())}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5 class="mb-3">Address: </h5><h6 class="mb-3 mx-2" th:text="${offer.getApartment().getAddress()}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Rooms:</h5><h6 class="mx-2" th:text="${offer.getApartment().getRoomCount()}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Size:</h5><h6 class="mx-2" th:text="${offer.getApartment().getSize() + ' &#13217'}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Rent:</h5><h6 class="mx-2" th:text="${offer.getPrice() + ' BGN per month!'}"></h6>
+                    </li>
+                    <li class="list-group-item bg-dark-subtle border-dark-subtle">
+                        <h5>Contract:</h5><h6 class="mx-2" th:text="${offer.getMinLength()}"></h6>
+                    </li>
+
+                </ul>
+                <div class="card-body">
+                    <a class="btn-primary btn d-inline" th:href="@{/offers/selected/{offerId}(offerId=${offer.getId()})}">Show Apartment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div th:replace="~{fragments/footer}"></div>
+
+
+<script>
+    function toggleText() {
+
+        // Get all the elements from the page
+        var points =
+            document.getElementById("points");
+
+        var showMoreText =
+            document.getElementById("moreText");
+
+        var buttonText =
+            document.getElementById("textButton");
+
+        // If the display property of the dots
+        // to be displayed is already set to
+        // 'none' (that is hidden) then this
+        // section of code triggers
+        if (points.style.display === "none") {
+
+            // Hide the text between the span
+            // elements
+            showMoreText.style.display = "none";
+
+            // Show the dots after the text
+            points.style.display = "inline";
+
+            // Change the text on button to
+            // 'Show More'
+            buttonText.innerHTML = "Show More";
+        }
+
+            // If the hidden portion is revealed,
+        // we will change it back to be hidden
+        else {
+
+            // Show the text between the
+            // span elements
+            showMoreText.style.display = "inline";
+
+            // Hide the dots after the text
+            points.style.display = "none";
+
+            // Change the text on button
+            // to 'Show Less'
+            buttonText.innerHTML = "Show Less";
+        }
+    }
+</script>
+<style>
+    h6, h5 {display:inline-block}
+</style>
+</body>
+</html>

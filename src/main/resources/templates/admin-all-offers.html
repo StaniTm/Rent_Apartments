@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+<section th:replace="~{fragments/navbar}"></section>
+<div class="container">
+    <h1 class="text-center text-dark">Admin Offers Panel</h1>
+</div>
+<div class="container">
+    <table class="table table-bordered mt-2">
+        <thead class="table-success">
+        <tr>
+            <th scope="col">OfferId</th>
+            <th scope="col">ApartmentId</th>
+            <th scope="col">Price</th>
+            <th scope="col">MinContractLength</th>
+            <th scope="col">Remove Offer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:if="${#lists.size(offers) > 0}">
+            <tr th:each="offer : ${offers}">
+                <td th:text="${offer.getId()}"></td>
+                <td th:text="${offer.getApartment().getId}"></td>
+                <td th:text="${offer.getPrice()}"></td>
+                <td th:text="${offer.getMinLength()}"></td>
+                <td>
+                <th:block th:if="${offer.getApartment.isBooked() || offer.getApartment.isRented()}">
+                    <p>Cant remove. Apartment <br> in this offer is booked for a viewing!</p>
+                </th:block>
+                <th:block th:unless="${offer.getApartment.isBooked() || offer.getApartment.isRented()}">
+                    <a th:href="@{/offers/admin/remove/offer/{offerId}(offerId=${offer.getId()})}" class="btn btn-primary">Delete</a>
+                </th:block>
+                </td>
+            </tr>
+        </th:block>
+
+        </tbody>
+    </table>
+</div>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

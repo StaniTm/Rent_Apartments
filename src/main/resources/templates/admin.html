@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--head-->
+<head th:replace="~{fragments/head}"></head>
+<body>
+<!--navigation-->
+<div class="container">
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<div class="container"
+     style="background-image: url('https://img.etimg.com/photo/95779610.cms'); height: 800px; width: 1295px">
+    <div class="header text-center text-white"><h1 style="font-size: xxx-large">Welcome to Admin Panel</h1></div>
+    <!--Admin navigation-->
+    <div class="container-md">
+        <div class="row align-content-md-center mb-3 bg-body-emphasis">
+            <div class="row mb-3 mt-3 align-content-md-center w-100 btn-">
+                <div class="col-2 col-sm text-center button-holder">
+                    <a href="/offers/add-offer" class="btn btn-info" type="button" >Add Offer</a>
+                </div>
+                <div class="col-3 col-sm text-center button-holder">
+                    <a href="/admin/all-contracts" class="btn btn-info" type="button">Manage Contracts</a>
+                </div>
+                <div class="col-1 col-sm text-center button-holder">
+                    <a href="/admin/all-users" class="btn btn-info" type="button">Manage Users</a>
+                </div>
+                <div class="col-4 col-sm text-center button-holder">
+                    <a href="/admin/all-apartments" class="btn btn-info" type="button">Manage Apartments</a>
+                </div>
+                <div class="col-5 col-sm text-center button-holder">
+                    <a href="/admin/all-offers" class="btn btn-info" type="button">Manage Offers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>
