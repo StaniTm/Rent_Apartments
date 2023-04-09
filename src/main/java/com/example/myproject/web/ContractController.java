@@ -1,10 +1,11 @@
-package com.example.libraryStore.web;
+package com.example.myproject.web;
 
-import com.example.libraryStore.domain.model.banding.business.RentForm;
-import com.example.libraryStore.domain.model.dtoS.user.UserModel;
-import com.example.libraryStore.service.business.ContractService;
-import com.example.libraryStore.service.business.OfferService;
-import com.example.libraryStore.service.user.UserService;
+
+import com.example.myproject.domain.model.banding.business.RentForm;
+import com.example.myproject.domain.model.dtoS.user.UserModel;
+import com.example.myproject.service.business.ContractService;
+import com.example.myproject.service.business.OfferService;
+import com.example.myproject.service.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

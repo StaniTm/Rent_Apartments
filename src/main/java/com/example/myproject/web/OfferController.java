@@ -1,12 +1,12 @@
-package com.example.libraryStore.web;
+package com.example.myproject.web;
 
-import com.example.libraryStore.domain.model.banding.business.ApartmentOfferForm;
-import com.example.libraryStore.domain.model.view.CityViewModel;
-import com.example.libraryStore.domain.model.view.OfferViewModel;
-import com.example.libraryStore.service.business.ApartmentService;
-import com.example.libraryStore.service.business.CityService;
-import com.example.libraryStore.service.business.OfferService;
-import com.example.libraryStore.utils.Utils;
+import com.example.myproject.domain.model.banding.business.ApartmentOfferForm;
+import com.example.myproject.domain.model.view.CityViewModel;
+import com.example.myproject.domain.model.view.OfferViewModel;
+import com.example.myproject.service.business.ApartmentService;
+import com.example.myproject.service.business.CityService;
+import com.example.myproject.service.business.OfferService;
+import com.example.myproject.utils.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

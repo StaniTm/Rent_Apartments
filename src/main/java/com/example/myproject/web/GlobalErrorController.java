@@ -1,9 +1,9 @@
-package com.example.libraryStore.web;
+package com.example.myproject.web;
 
-import com.example.libraryStore.domain.model.errors.ApartmentNotFoundException;
-import com.example.libraryStore.domain.model.errors.CityNotFoundException;
-import com.example.libraryStore.domain.model.errors.OfferNotFoundException;
-import com.example.libraryStore.domain.model.errors.UserNotFoundException;
+import com.example.myproject.domain.model.errors.ApartmentNotFoundException;
+import com.example.myproject.domain.model.errors.CityNotFoundException;
+import com.example.myproject.domain.model.errors.OfferNotFoundException;
+import com.example.myproject.domain.model.errors.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

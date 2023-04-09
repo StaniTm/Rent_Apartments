@@ -1,6 +1,6 @@
-package com.example.libraryStore.web;
+package com.example.myproject.web;
 
-import com.example.libraryStore.service.business.OfferService;
+import com.example.myproject.service.business.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

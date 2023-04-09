@@ -1,2 +1,26 @@
-{
-    }
+logging:
+  level:
+    blog: WARN
+    org: WARN
+    org.hibernate.SQL: DEBUG
+server:
+  port: 8000
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: Hesoyam22
+    url: jdbc:mysql://localhost:3306/rent-apartments-app?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: false
+        show_sql: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    throw-exception-if-no-handler-found: true
